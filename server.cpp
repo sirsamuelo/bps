@@ -9,28 +9,18 @@
 #include <unordered_map>
 using namespace std;
 
-//g = 5
-//a = 6
-//p = 29
+
 unsigned long long diffie_hellman(unsigned long long generator, unsigned long long privateKey, unsigned long long primeNum) {
     unsigned long long result = 1;
-    //generator musi byt mensi ako prime number ? 
-    generator = generator % primeNum;  // Update generator if it's more than or equal to primeNum
+ 
+    generator = generator % primeNum;  
   
     while (privateKey > 0) {
-         std::cout << "zaciatok iteracie" << std::endl;
-         std::cout << "privateKey: " << privateKey << ", result: " << result << ", generator: " << generator << std::endl;
-
         if (privateKey % 2 == 1) {
             result = (result * generator) % primeNum;
         }
-        
         privateKey = privateKey / 2;
         generator = (generator * generator) % primeNum;
-
-        std::cout << "koniec iteracie" << std::endl;
-        std::cout << "privateKey: " << privateKey << ", result: " << result << ", generator: " << generator << std::endl;
-
     }
     return result;
 }
@@ -46,11 +36,8 @@ bool verify_md5(const string& filename, const unordered_map<string, string>& kno
 
     while (getline(file, line)) {
         string hash = line.substr(0, 32);
-        string file_name = line.substr(33);  // Assuming that there is at least one space between the hash and the file name
-        cout << "Hash je: " << hash <<endl;
-        cout << "Subor je: " << file_name <<endl;
-
-
+        string file_name = line.substr(33);  
+ 
         if (known_hashes.find(file_name) != known_hashes.end()) {
             if (known_hashes.at(file_name) != hash) {
                 cerr << "Hash mismatch for " << file_name << endl;
@@ -58,7 +45,6 @@ bool verify_md5(const string& filename, const unordered_map<string, string>& kno
             }
         }
     }
-
     return true;
 }
 
@@ -93,25 +79,20 @@ int main() {
     cout << "Message sent" << endl;
 
 
-     // Diffie-Hellman inicializácia
-    unsigned long long p = 29; // Veľké prvočíslo
-    unsigned long long g = 5;  // Generátor
-    unsigned long long pKey = 6;  // Náhodné číslo na serveri
+    unsigned long long p = 29;
+    unsigned long long g = 5; 
+    unsigned long long pKey = 6;  
 
     unsigned long long A = diffie_hellman(g, pKey, p);
 
-
-    // Posiela A klientovi
     string A_str = to_string(A);
-    cout << "Sending A: " << A_str << endl;  // Debug
+    cout << "Sending A: " << A_str << endl;  
     send(new_socket, A_str.c_str(), A_str.length(), 0);
     
-    // Prijíma B od klienta
     char buffer[1024] = {0};
     read(new_socket, buffer, 1024);
     unsigned long long B = stoull(buffer);
 
-    // Vypočíta zdieľaný tajný kľúč
     unsigned long long shared_secret = diffie_hellman(B, pKey, p);
 
     cout << "Shared secret: " << shared_secret << endl;
