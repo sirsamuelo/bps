@@ -55,8 +55,6 @@ int main() {
         {"server.cpp", "fecf7b9851af8187d21eb5d4e36506f8"}
     };
 
-
-
     if (!verify_md5("md5sum.txt", known_hashes)) {
         cerr << "Integrity check failed. Exiting..." << endl;
         return 1;
@@ -77,7 +75,6 @@ int main() {
     string hello = "Hello from server";
     send(new_socket, hello.c_str(), hello.length(), 0);
     cout << "Message sent" << endl;
-
 
     unsigned long long p = 29;
     unsigned long long g = 5; 
