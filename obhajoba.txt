@@ -1,0 +1,40 @@
+Ako funguje Diffie-Hellmanov algoritmus a prečo si sa rozhodol ho použiť v tomto projekte?
+Čo predstavujú g, p a privateKey v tvojom kóde a ako si ich vybral?
+Ako by si zabezpečil, že g a p sú naozaj prvočísla, a teda bezpečné?
+Aké je použitie md5sum.txt a čo sa stane, ak sa hash neschoduje?
+Prečo si sa rozhodol použiť C++? Boli tu nejaké konkrétne výhody?
+Ako zabezpečuješ, že dáta prenášané medzi klientom a serverom sú správne? (Ošetrenie chýb, atď.)
+Máš tam pevné hodnoty pre p, g a privateKey. Ako by sa toto dalo dynamicky generovať alebo zabezpečiť?
+Ktorá časť kódu je zodpovedná za vytvorenie socketu a prečo je nastavená tak, ako je?
+Je tvoj kód schopný zvládať viac ako jedno pripojenie naraz?
+Aké sú bezpečnostné riziká, ktoré by mohli nastať a ako by sa dali riešiť?
+
+Ako funguje Diffie-Hellmanov algoritmus a prečo si sa rozhodol ho použiť v tomto projekte?
+Diffie-Hellman je algoritmus, ktorý umožňuje dvom stranám vytvoriť spoločný tajný kľúč na základe verejných informácií, bez potreby predchádzajúceho zdieľania tajných informácií. Použil som ho na zaistenie bezpečnej komunikácie medzi klientom a serverom.
+
+Čo predstavujú g, p a privateKey v tvojom kóde a ako si ich vybral?
+g je generátor a p je prvočíslo. Obe sú verejne známe a sú použité pri výpočte verejných kľúčov. privateKey je tajný kľúč, ktorý je náhodne vygenerovaný a je známy iba príslušnej strane. Vybral som ich na základe základných pravidiel pre Diffie-Hellmanov algoritmus.
+
+Ako by si zabezpečil, že g a p sú naozaj prvočísla, a teda bezpečné?
+Môžem použiť algoritmus na testovanie prvočíselnosti, ako je Miller-Rabinov test, na overenie, že p je skutočne prvočíslo. Na výber generátora g by som použil odporúčané hodnoty od štandardných organizácií, ako je NIST.
+
+Aké je použitie md5sum.txt a čo sa stane, ak sa hash neschoduje?
+md5sum.txt obsahuje hashovacie hodnoty MD5 pre určité súbory. Ak hash nesúhlasí, program ukončí svoju činnosť, signalizujúc, že integrita súborov bola narušená.
+
+Prečo si sa rozhodol použiť C++? Boli tu nejaké konkrétne výhody?
+Použil som C++ pre jeho efektivitu a širokú podporu sieťových a kryptografických knižníc.
+
+Ako zabezpečuješ, že dáta prenášané medzi klientom a serverom sú správne? (Ošetrenie chýb, atď.)
+Aktuálne môj kód nemá explicitné ošetrenie chýb pri prenose dát. Toto je oblasť, kde by som mohol implementovať dodatočné kontrolné mechanizmy.
+
+Máš tam pevné hodnoty pre p, g a privateKey. Ako by sa toto dalo dynamicky generovať alebo zabezpečiť?
+Hodnoty p, g a privateKey by mohli byť dynamicky generované pomocou kryptograficky bezpečných generátorov náhodných čísel.
+
+Ktorá časť kódu je zodpovedná za vytvorenie socketu a prečo je nastavená tak, ako je?
+Funkcia socket() vytvára socket a bind() ju viaže na konkrétnu adresu a port. Použil som IPv4 (AF_INET) a TCP (SOCK_STREAM) pre spoľahlivý prenos.
+
+Je tvoj kód schopný zvládať viac ako jedno pripojenie naraz?
+Aktuálne nie. Kód je napísaný pre jednorazovú komunikáciu medzi jedným klientom a jedným serverom. Pre viac pripojení by bolo potrebné použiť viacvláknové programovanie alebo asynchrónne I/O.
+
+Aké sú bezpečnostné riziká, ktoré by mohli nastať a ako by sa dali riešiť?
+Hlavné riziká sú neoverenie pravosti klienta/servera a možnosť úniku tajných kľúčov. Tieto riziká by sa dali riešiť použitím certifikátov a ďalších pokročilejších metód autentifikácie.
